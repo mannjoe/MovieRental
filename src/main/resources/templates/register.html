@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Registration Page</title>
+<link rel="stylesheet" th:href="@{/css/register.css}">
+</head>
+
+<body>
+	<div class="main-container">
+		<div class="mandatory-and-back">
+			<div class="back-to-login">
+				<a href="/logout">Back to Login</a>
+			</div>
+			<div class="mandatory-statement">All fields are mandatory.</div>
+		</div>
+		<div class="registration-container">
+			<form id="registration-form" th:action="@{/register}" method="post">
+				<div class="form-row">
+					<div class="form-group">
+						<label for="first-name">First Name</label> <input type="text"
+							id="first-name" name="first-name" required>
+					</div>
+					<div class="form-group">
+						<label for="last-name">Last Name</label> <input type="text"
+							id="last-name" name="last-name" required>
+					</div>
+				</div>
+				<div class="form-row">
+					<div class="form-group">
+						<label for="dob">Date of Birth</label> <input type="date" id="dob"
+							name="dob" required
+							th:max="${#dates.format(#dates.createNow(),'yyyy-MM-dd')}" />
+					</div>
+					<div class="form-group">
+						<label for="mobile">Mobile Number</label> <input type="tel"
+							id="mobile" name="mobile" required>
+					</div>
+				</div>
+				<div class="form-row">
+					<div class="form-group">
+						<label for="password">Password</label> <input type="password"
+							id="password" name="password" required>
+						<p th:if="${passwordError}" class="error-message"
+							th:text="${passwordError}"></p>
+					</div>
+					<div class="form-group">
+						<label for="confirm-password">Confirm Password</label> <input
+							type="password" id="confirm-password" name="confirm-password"
+							required>
+						<p th:if="${confirmPasswordError}" class="error-message"
+							th:text="${confirmPasswordError}"></p>
+					</div>
+				</div>
+				<div class="form-row">
+					<div class="form-group full-width">
+						<label for="email">Email Address</label> <input type="email"
+							id="email" name="email" required>
+					</div>
+				</div>
+				<p th:if="${registrationError}" class="error-message"
+					th:text="${registrationError}"></p>
+				<button type="submit">Register</button>
+			</form>
+		</div>
+		<footer>
+			<div class="footer-content">© 2024 Movie Rental System. All
+				Rights Reserved.</div>
+		</footer>
+	</div>
+</body>
+
+</html>

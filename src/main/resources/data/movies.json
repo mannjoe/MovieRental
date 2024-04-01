@@ -1,0 +1,32 @@
+[
+	{
+		"name": "Oblivion",
+		"description": "A veteran assigned to extract Earth's remaining resources begins to question what he knows about his mission and himself.",
+		"casts": "Tom Cruise, Morgan Freeman, Andrea Riseborough",
+		"genres": "Action, Adventure, Sci-Fi",
+		"duration": 124,
+		"releasedYear": 2013,
+		"imageUrl": "/img/oblivion_v2.jpg",
+		"videoUrl": "https://www.youtube.com/watch?v=XmIIgE7eSak"
+	},
+	{
+		"name": "Rogue One: A Star Wars Story",
+		"description": "In a time of conflict, a group of unlikely heroes band together on a mission to steal the plans to the Death Star, the Empire's ultimate weapon of destruction.",
+		"casts": "Felicity Jones, Diego Luna, Alan Tudyk",
+		"genres": "Action, Adventure, Sci-Fi",
+		"duration": 133,
+		"releasedYear": 2016,
+		"imageUrl": "/img/starwars_v2.jpg",
+		"videoUrl": "https://www.youtube.com/watch?v=frdj1zb9sMY"
+	},
+	{
+		"name": "Transformers: Rise of the Beasts",
+		"description": "During the '90s, a new faction of Transformers - the Maximals - join the Autobots as allies in the battle for Earth.",
+		"casts": "Anthony Ramos, Dominique Fishback, Luna Lauren Velez",
+		"genres": "Action, Adventure, Sci-Fi",
+		"duration": 127,
+		"releasedYear": 2023,
+		"imageUrl": "/img/transformers_v2.jpg",
+		"videoUrl": "https://www.youtube.com/watch?v=itnqEauWQZM"
+	}
+]

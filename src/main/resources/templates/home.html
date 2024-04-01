@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Movie Rental System</title>
+<link rel="stylesheet" th:href="@{/css/home.css}">
+</head>
+
+<body>
+
+	<header>
+		<div class="header-content">
+			<div class="greeting-container">
+				<span>Hello, <span th:text="${session.name}"></span></span>
+			</div>
+			<div class="logo-container">
+				<img src="../img/fdm_logo.png" alt="FDM logo">
+			</div>
+			<div class="logout-container">
+				<a href="/logout">Logout</a>
+			</div>
+		</div>
+	</header>
+
+	<div class="container">
+		<h1>Trending Movies</h1>
+		<div class="movies-container">
+			<!-- Iterate over the list of movies -->
+			<div th:each="movie : ${movies}" class="movie">
+				<img th:src="${movie.imageUrl}" alt="Movie Poster">
+				<h2 th:text="${movie.name}"></h2>
+				<p>
+					Casts: <span th:text="${movie.casts}"></span>
+				</p>
+				<p>
+					Genres: <span th:text="${movie.genres}"></span>
+				</p>
+			</div>
+		</div>
+	</div>
+
+	<footer>
+		<div class="footer-content">© 2024 Movie Rental System. All
+			Rights Reserved.</div>
+	</footer>
+
+</body>
+
+</html>

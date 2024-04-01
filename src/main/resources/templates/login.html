@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Movie Rental System</title>
+<link rel="stylesheet" th:href="@{/css/login.css}">
+</head>
+
+<body>
+
+	<div class="main-container">
+		<header>
+			<img src="../img/fdm_logo.png" alt="FDM logo">
+		</header>
+		<div class="container">
+			<div class="left-container">
+				<div class="left-section">
+					<div class="banner-images">
+						<img class="banner-image oblivion" src="../img/oblivion.jpeg"
+							alt="Oblivion banner"> <img class="banner-image starwars"
+							src="../img/starwars.jpg" alt="Star Wars banner"> <img
+							class="banner-image transformers" src="../img/transformers.jpeg"
+							alt="Transformers banner">
+						<div class="right-round-button">&gt;</div>
+						<div class="left-round-button">&lt;</div>
+					</div>
+				</div>
+			</div>
+			<div class="right-container">
+				<div class="right-section">
+					<div class="login-container">
+						<h2 class="login-header">Login</h2>
+						<form id="login-form" method="post" action="/login">
+							<div class="form-group">
+								<label for="identifier">Email Address / Mobile Number</label> <input
+									type="text" id="identifier" name="identifier" required>
+							</div>
+							<div class="form-group">
+								<label for="password">Password</label> <input type="password"
+									id="password" name="password" required>
+							</div>
+							<p th:if="${error}" class="error-message" th:text="${error}"></p>
+							<button type="submit">Login</button>
+						</form>
+						<p>
+							Don't have an account? <a href="/register">Register here</a>
+						</p>
+					</div>
+				</div>
+			</div>
+		</div>
+		<footer>
+			<div class="footer-content">© 2024 Movie Rental System. All
+				Rights Reserved.</div>
+		</footer>
+	</div>
+
+	<script src="../js/login.js"></script>
+
+</body>
+
+</html>
