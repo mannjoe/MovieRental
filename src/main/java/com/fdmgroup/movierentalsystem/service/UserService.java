@@ -1,10 +1,14 @@
 package com.fdmgroup.movierentalsystem.service;
 
-import com.fdmgroup.movierentalsystem.model.User;
-import com.fdmgroup.movierentalsystem.repository.UserRepository;
+import java.util.Optional;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import java.util.Optional;
+
+import com.fdmgroup.movierentalsystem.model.User;
+import com.fdmgroup.movierentalsystem.repository.UserRepository;
 
 /**
  * Service class for managing user-related operations.
@@ -15,6 +19,8 @@ import java.util.Optional;
  */
 @Service
 public class UserService {
+
+	private static final Logger logger = LoggerFactory.getLogger(UserService.class);
 
 	private final UserRepository userRepository;
 
@@ -33,15 +39,18 @@ public class UserService {
 	 *         authentication fails
 	 */
 	public String authenticate(String identifier, String password) {
+		logger.debug("Authenticating user with identifier: {}", identifier);
 		Optional<User> userByMobile = userRepository.findByMobileNumber(identifier);
 		Optional<User> userByEmail = userRepository.findByEmailAddress(identifier);
 		Optional<User> userOptional = userByMobile.isPresent() ? userByMobile : userByEmail;
 		if (userOptional.isPresent()) {
 			User user = userOptional.get();
 			if (password.equals(user.getPassword())) {
+				logger.info("User authentication successful for user: {}", user.getFirstName());
 				return user.getFirstName();
 			}
 		}
+		logger.warn("User authentication failed for identifier: {}", identifier);
 		return "";
 	}
 
@@ -53,12 +62,15 @@ public class UserService {
 	 *         same mobile number or email already exists
 	 */
 	public boolean registerNewUser(User user) {
+		logger.debug("Registering new user: {}", user);
 		Optional<User> userSameMobile = userRepository.findByMobileNumber(user.getMobileNumber());
 		Optional<User> userSameEmail = userRepository.findByEmailAddress(user.getEmailAddress());
 		if (userSameMobile.isPresent() || userSameEmail.isPresent()) {
+			logger.warn("Registration failed. User with the same mobile number or email already exists");
 			return false;
 		}
 		userRepository.save(user);
+		logger.info("New user registered successfully: {}", user.getFirstName());
 		return true;
 	}
 }

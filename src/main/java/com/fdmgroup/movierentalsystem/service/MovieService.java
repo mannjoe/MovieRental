@@ -2,6 +2,8 @@ package com.fdmgroup.movierentalsystem.service;
 
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,6 +20,8 @@ import com.fdmgroup.movierentalsystem.repository.MovieRepository;
 @Service
 public class MovieService {
 
+	private static final Logger logger = LoggerFactory.getLogger(MovieService.class);
+
 	private final MovieRepository movieRepository;
 
 	@Autowired
@@ -31,6 +35,7 @@ public class MovieService {
 	 * @return A list of all movies
 	 */
 	public List<Movie> getAllMovies() {
+		logger.debug("Retrieving all movies");
 		return movieRepository.findAll();
 	}
 
@@ -42,6 +47,7 @@ public class MovieService {
 	 * @return The movie if found, otherwise null
 	 */
 	public Movie findMovieByNameAndReleasedYear(String name, int releasedYear) {
+		logger.debug("Finding movie by name '{}' and released year '{}'", name, releasedYear);
 		return movieRepository.findByNameAndReleasedYear(name, releasedYear);
 	}
 
@@ -52,6 +58,7 @@ public class MovieService {
 	 * @return The saved or updated movie
 	 */
 	public Movie saveOrUpdateMovie(Movie movie) {
+		logger.debug("Saving or updating movie: {}", movie);
 		return movieRepository.save(movie);
 	}
 }
