@@ -2,6 +2,7 @@ package com.fdmgroup.movierentalsystem.model;
 
 import jakarta.persistence.*;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 @Entity
 @Table(name = "rentals")
@@ -12,25 +13,33 @@ public class Rental {
 	private long rentalId;
 
 	@ManyToOne
-	@JoinColumn(name = "user_id")
+	@JoinColumn(name = "userId")
 	private User user;
 
 	@ManyToOne
-	@JoinColumn(name = "movie_id")
+	@JoinColumn(name = "movieId")
 	private Movie movie;
 
 	private double amountPaid;
 	private LocalDateTime dateRented;
 	private LocalDateTime expiryDate;
 
-	// Constructors, getters, and setters
-	// Constructor
+	/**
+	 * Default constructor.
+	 */
 	public Rental() {
 
 	}
 
+	/**
+	 * Parameterized constructor to initialize a rental object.
+	 * 
+	 * @param user       The user who rented the movie
+	 * @param movie      The movie rented
+	 * @param amountPaid The amount paid for the rental
+	 * @param days       Number of days for rental
+	 */
 	public Rental(User user, Movie movie, double amountPaid, int days) {
-		super();
 		setUser(user);
 		setMovie(movie);
 		setAmountPaid(amountPaid);
@@ -38,7 +47,6 @@ public class Rental {
 		setExpiryDate(days);
 	}
 
-	// Getters and Setters
 	public long getRentalId() {
 		return rentalId;
 	}
@@ -83,7 +91,22 @@ public class Rental {
 		return expiryDate;
 	}
 
+	/**
+	 * Sets the expiry date of the rental based on the number of days.
+	 * 
+	 * @param days Number of days for rental
+	 */
 	public void setExpiryDate(int days) {
 		this.expiryDate = this.dateRented.plusDays(days);
+	}
+
+	/**
+	 * Gets the formatted expiry date of the rental.
+	 * 
+	 * @return The formatted expiry date string
+	 */
+	public String getFormattedExpiryDate() {
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+		return expiryDate.format(formatter);
 	}
 }

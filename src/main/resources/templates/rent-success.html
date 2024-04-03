@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Rent Confirmation - Movie Rental System</title>
+<link rel="stylesheet" th:href="@{/css/rent-success.css}">
+</head>
+<body>
+	<header>
+		<div class="header-content">
+			<div class="greeting-container">
+				<span>Hello, <span th:text="${session.name}"></span></span>
+			</div>
+			<div class="logo-container">
+				<a href="/home"><img th:src="@{/img/fdm_logo.png}"
+					alt="FDM logo"></a>
+			</div>
+			<div class="logout-container">
+				<a href="/logout">Logout</a>
+			</div>
+		</div>
+	</header>
+
+	<div class="container">
+		<div class="message">
+			<p>
+				Thank you for renting <span th:text="${session.movieName}"></span>.
+			</p>
+			<p>A personalized link will be sent to your email.</p>
+			<p>
+				The link will expire in <span th:text="${session.expiryDate}"></span>.
+			</p>
+			<a href="/">Return to Home</a>
+		</div>
+	</div>
+
+	<footer>
+		<div class="footer-content">© 2024 Movie Rental System. All
+			Rights Reserved.</div>
+	</footer>
+</body>
+</html>

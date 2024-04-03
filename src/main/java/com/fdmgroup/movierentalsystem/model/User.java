@@ -49,7 +49,6 @@ public class User {
 	 */
 	public User(String firstName, String lastName, LocalDate dob, String password, String mobileNumber,
 			String emailAddress) {
-		super();
 		setFirstName(firstName);
 		setLastName(lastName);
 		setDob(dob);
@@ -57,12 +56,23 @@ public class User {
 		setMobileNumber(mobileNumber);
 		setEmailAddress(emailAddress);
 	}
-	
+
+	/**
+	 * Parameterized constructor to initialize a user object with user ID.
+	 * 
+	 * @param userId       The ID of the user
+	 * @param firstName    First name of the user
+	 * @param lastName     Last name of the user
+	 * @param dob          Date of birth of the user
+	 * @param password     Password of the user
+	 * @param mobileNumber Mobile number of the user
+	 * @param emailAddress Email address of the user
+	 */
 	public User(long userId, String firstName, String lastName, LocalDate dob, String password, String mobileNumber,
 			String emailAddress) {
 		this(firstName, lastName, dob, password, mobileNumber, emailAddress);
 		setUserId(userId);
-	}	
+	}
 
 	public long getUserId() {
 		return userId;

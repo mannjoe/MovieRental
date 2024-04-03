@@ -10,6 +10,11 @@ import org.springframework.stereotype.Repository;
 /**
  * Repository interface for User entities.
  * 
+ * <p>
+ * This interface provides methods to interact with the User entities in the
+ * database.
+ * </p>
+ * 
  * @author Wong Mann Joe
  * @version 1.0
  * @date 2024-04-01

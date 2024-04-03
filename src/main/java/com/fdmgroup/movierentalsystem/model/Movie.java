@@ -36,14 +36,14 @@ public class Movie {
 	/**
 	 * Parameterized constructor to initialize a movie object.
 	 * 
-	 * @param name         Name of the movie
-	 * @param casts        Casts of the movie
-	 * @param description  Description of the movie
-	 * @param genres       Genres of the movie
-	 * @param duration     Duration of the movie (in minutes)
+	 * @param name        Name of the movie
+	 * @param casts       Casts of the movie
+	 * @param description Description of the movie
+	 * @param genres      Genres of the movie
+	 * @param duration    Duration of the movie (in minutes)
 	 * @param releaseYear Year the movie was release
-	 * @param imageUrl     URL of the movie's image
-	 * @param videoUrl     URL of the movie's video
+	 * @param imageUrl    URL of the movie's image
+	 * @param videoUrl    URL of the movie's video
 	 */
 	public Movie(String name, String casts, String description, String genres, int duration, int releaseYear,
 			String imageUrl, String videoUrl) {
@@ -57,9 +57,22 @@ public class Movie {
 		setImageUrl(imageUrl);
 		setVideoUrl(videoUrl);
 	}
-	
-	public Movie(long movieId, String name, String casts, String description, String genres, int duration, int releaseYear,
-			String imageUrl, String videoUrl) {
+
+	/**
+	 * Parameterized constructor to initialize a movie object with movie ID.
+	 * 
+	 * @param movieId     The ID of the movie
+	 * @param name        Name of the movie
+	 * @param casts       Casts of the movie
+	 * @param description Description of the movie
+	 * @param genres      Genres of the movie
+	 * @param duration    Duration of the movie (in minutes)
+	 * @param releaseYear Year the movie was release
+	 * @param imageUrl    URL of the movie's image
+	 * @param videoUrl    URL of the movie's video
+	 */
+	public Movie(long movieId, String name, String casts, String description, String genres, int duration,
+			int releaseYear, String imageUrl, String videoUrl) {
 		this(name, casts, description, genres, duration, releaseYear, imageUrl, videoUrl);
 		setMovieId(movieId);
 	}

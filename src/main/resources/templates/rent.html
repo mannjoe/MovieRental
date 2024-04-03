@@ -1,14 +1,12 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Movie Rental System</title>
 <link rel="stylesheet" th:href="@{/css/rent.css}">
-<script th:src="@{/js/rent.js}"></script>
+<script th:src="@{/js/rent.js}" defer></script>
 </head>
-
 <body>
 	<header>
 		<div class="header-content">
@@ -16,7 +14,9 @@
 				<span>Hello, <span th:text="${session.name}"></span></span>
 			</div>
 			<div class="logo-container">
-				<img th:src="@{/img/fdm_logo.png}" alt="FDM logo">
+				<a href="/home"> <img th:src="@{/img/fdm_logo.png}"
+					alt="FDM logo">
+				</a>
 			</div>
 			<div class="logout-container">
 				<a href="/logout">Logout</a>
@@ -60,16 +60,17 @@
 						<option value="6">6 Days</option>
 						<option value="7">7 Days</option>
 					</select>
-					<button class="rent-button" onclick="confirmTransaction()">Rent
-						Now</button>
+					<button class="rent-button" onclick="confirmTransaction()"
+						th:if="${!alreadyRented}">Rent Now</button>
+					<button class="rent-button rented" disabled
+						th:if="${alreadyRented}">Rented</button>
 				</div>
-				<form id="rentForm" action="/rent-confirm" method="post">
+				<form id="rentForm" action="/rent-transaction" method="post">
 					<input type="hidden" id="movieId" name="movieId"
 						th:value="${movie.movieId}"> <input type="hidden"
 						id="rentalDays" name="rentalDays" value=""> <input
 						type="hidden" id="totalPrice" name="totalPrice" value="">
 				</form>
-
 				<p id="total-price-container" class="total-price">
 					Total Price: $<span id="total-price" th:text="${rentalPricePerDay}">0.00</span>
 				</p>
@@ -81,7 +82,5 @@
 		<div class="footer-content">© 2024 Movie Rental System. All
 			Rights Reserved.</div>
 	</footer>
-
 </body>
-
 </html>

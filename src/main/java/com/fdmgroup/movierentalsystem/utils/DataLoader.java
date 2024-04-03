@@ -19,6 +19,11 @@ import java.util.List;
  * Utility class for loading data from a JSON file into the database on
  * application startup.
  * 
+ * <p>
+ * This class provides a method to load movie data from a JSON file and save it
+ * into the database.
+ * </p>
+ * 
  * @author Wong Mann Joe
  * @version 1.0
  * @date 2024-04-01

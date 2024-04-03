@@ -2,18 +2,30 @@ package com.fdmgroup.movierentalsystem.service;
 
 import java.util.Optional;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.fdmgroup.movierentalsystem.model.User;
 import com.fdmgroup.movierentalsystem.repository.UserRepository;
 
+/**
+ * Service class for managing user-related operations.
+ * 
+ * <p>
+ * This class provides methods to authenticate users, register new users, and
+ * find users by ID.
+ * </p>
+ * 
+ * @author Wong Mann Joe
+ * @version 1.0
+ * @date 2024-04-01
+ */
 @Service
 public class UserService {
 
-	private static final Logger logger = LoggerFactory.getLogger(UserService.class);
+	private static final Logger logger = LogManager.getLogger(UserService.class);
 
 	private final UserRepository userRepository;
 

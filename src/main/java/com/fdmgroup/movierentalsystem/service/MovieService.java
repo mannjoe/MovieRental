@@ -1,18 +1,24 @@
 package com.fdmgroup.movierentalsystem.service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.fdmgroup.movierentalsystem.model.Movie;
 import com.fdmgroup.movierentalsystem.repository.MovieRepository;
+import com.fdmgroup.movierentalsystem.repository.RentalRepository;
 
 /**
  * Service class for managing movie-related operations.
+ * 
+ * <p>
+ * This class provides methods to interact with movies in the system.
+ * </p>
  * 
  * @author Wong Mann Joe
  * @version 1.0
@@ -21,13 +27,15 @@ import com.fdmgroup.movierentalsystem.repository.MovieRepository;
 @Service
 public class MovieService {
 
-	private static final Logger logger = LoggerFactory.getLogger(MovieService.class);
+	private static final Logger logger = LogManager.getLogger(MovieService.class);
 
 	private final MovieRepository movieRepository;
+	private final RentalRepository rentalRepository;
 
 	@Autowired
-	public MovieService(MovieRepository movieRepository) {
+	public MovieService(MovieRepository movieRepository, RentalRepository rentalRepository) {
 		this.movieRepository = movieRepository;
+		this.rentalRepository = rentalRepository;
 	}
 
 	/**
@@ -39,10 +47,16 @@ public class MovieService {
 		logger.debug("Retrieving all movies");
 		return movieRepository.findAll();
 	}
-	
+
+	/**
+	 * Finds a movie by its ID.
+	 * 
+	 * @param movieId The ID of the movie
+	 * @return An optional containing the movie if found, otherwise empty
+	 */
 	public Optional<Movie> findMovieById(long movieId) {
-        return movieRepository.findById(movieId);
-    }
+		return movieRepository.findById(movieId);
+	}
 
 	/**
 	 * Finds a movie by its name and released year.
@@ -65,5 +79,24 @@ public class MovieService {
 	public Movie saveOrUpdateMovie(Movie movie) {
 		logger.debug("Saving or updating movie: {}", movie);
 		return movieRepository.save(movie);
+	}
+
+	/**
+	 * Finds unrented movies for a given user.
+	 * 
+	 * @param userId The ID of the user
+	 * @return A list of unrented movies
+	 */
+	public List<Movie> findUnrentedMovies(long userId) {
+		List<Movie> rentedMovies = rentalRepository.findMoviesRentedByUserId(userId);
+		List<Movie> allMovies = movieRepository.findAll();
+		List<Movie> unrentedMovies = new ArrayList<>();
+
+		for (Movie movie : allMovies) {
+			if (!rentedMovies.contains(movie)) {
+				unrentedMovies.add(movie);
+			}
+		}
+		return unrentedMovies;
 	}
 }

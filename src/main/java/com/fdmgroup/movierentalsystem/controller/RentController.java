@@ -1,6 +1,5 @@
 package com.fdmgroup.movierentalsystem.controller;
 
-import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,8 +19,16 @@ import com.fdmgroup.movierentalsystem.service.RentalService;
 import com.fdmgroup.movierentalsystem.service.UserService;
 
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 
+/**
+ * Controller class for handling movie rental operations.
+ *
+ * @author Wong Mann Joe
+ * @version 1.0
+ * @date 2024-04-01
+ */
 @Controller
 public class RentController {
 
@@ -38,42 +45,54 @@ public class RentController {
 	private double rentalPricePerDay;
 
 	/**
-	 * Handles GET requests for the rental page.
-	 * 
-	 * @param movieId The ID of the movie to be displayed on the rental page.
-	 * @param model   The model to be populated with movie data.
-	 * @param request The HTTP servlet request to retrieve the session.
-	 * @return The view name for the rental page or a redirection to the login page
-	 *         if the user is not logged in or if the session is not valid.
+	 * Displays the rental page for a specific movie.
+	 *
+	 * @param movieId  The ID of the movie to rent
+	 * @param model    The model to be populated with movie data
+	 * @param request  The HTTP servlet request
+	 * @param response The HTTP servlet response
+	 * @return The view name for the rental page
 	 */
 	@GetMapping("/rent/{movieId}")
-	public String showRentalPage(@PathVariable long movieId, Model model, HttpServletRequest request) {
-		// Retrieve the session
+	public String showRentalPage(@PathVariable long movieId, Model model, HttpServletRequest request,
+			HttpServletResponse response) {
+		response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
+		response.setHeader("Pragma", "no-cache");
+		response.setHeader("Expires", "0");
 		HttpSession session = request.getSession(false);
-		// Check if session exists and if user is logged in
 		if (session != null && session.getAttribute("name") != null) {
-			// Retrieve the movie by its ID
 			Optional<Movie> optionalMovie = movieService.findMovieById(movieId);
-			// Check if the movie exists
 			if (optionalMovie.isPresent()) {
 				Movie movie = optionalMovie.get();
-				// Add the movie object to the model
+				boolean alreadyRented = rentalService.isUserAlreadyRentedMovie((Long) session.getAttribute("userId"),
+						movieId);
+				model.addAttribute("alreadyRented", alreadyRented);
 				model.addAttribute("movie", movie);
 				model.addAttribute("rentalPricePerDay", rentalPricePerDay);
-				// Return the view name for the rental page
+				if (alreadyRented) {
+					return "redirect:/home";
+				}
 				return "rent";
 			} else {
-				// If movie does not exist, redirect to error page
 				return "error";
 			}
 		} else {
-			// If session is not valid or user is not logged in, redirect to login page
 			return "redirect:/login";
 		}
 	}
 
-	@PostMapping("/rent-confirm")
-	public String showRentConfirmPage(@RequestParam long movieId, @RequestParam int rentalDays,
+	/**
+	 * Processes the rental transaction.
+	 *
+	 * @param movieId    The ID of the movie to rent
+	 * @param rentalDays The number of rental days
+	 * @param totalPrice The total price for the rental
+	 * @param request    The HTTP servlet request
+	 * @return The view name for the rental success page or redirects to the login
+	 *         page
+	 */
+	@PostMapping("/rent-transaction")
+	public String showProcessRent(@RequestParam long movieId, @RequestParam int rentalDays,
 			@RequestParam double totalPrice, HttpServletRequest request) {
 		HttpSession session = request.getSession(false);
 		if (session != null && session.getAttribute("name") != null) {
@@ -81,10 +100,27 @@ public class RentController {
 			Movie movie = movieService.findMovieById(movieId).get();
 			Rental rental = new Rental(user, movie, totalPrice, rentalDays);
 			rentalService.saveRental(rental);
-			return "rent-confirm";
+			session.setAttribute("movieName", movie.getName());
+			session.setAttribute("expiryDate", rental.getFormattedExpiryDate());
+			return "redirect:/rent-success";
 		} else {
 			return "redirect:/login";
 		}
 
+	}
+
+	/**
+	 * Displays the rental success page.
+	 *
+	 * @param session The HTTP session
+	 * @return The view name for the rental success page or redirects to the login
+	 *         page
+	 */
+	@GetMapping("/rent-success")
+	public String showRentSuccess(HttpSession session) {
+		if (session.getAttribute("name") != null) {
+			return "rent-success";
+		}
+		return "redirect:/login";
 	}
 }

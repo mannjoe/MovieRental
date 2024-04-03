@@ -5,6 +5,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Movie Rental System</title>
+<script defer th:src="@{/js/home.js}"></script>
 <link rel="stylesheet" th:href="@{/css/home.css}">
 </head>
 
@@ -16,7 +17,8 @@
 				<span>Hello, <span th:text="${session.name}"></span></span>
 			</div>
 			<div class="logo-container">
-				<img src="../img/fdm_logo.png" alt="FDM logo">
+				<a href="/home"> <img src="../img/fdm_logo.png" alt="FDM logo">
+				</a>
 			</div>
 			<div class="logout-container">
 				<a href="/logout">Logout</a>
@@ -25,14 +27,35 @@
 	</header>
 
 	<div class="container">
-		<h1>Trending Movies</h1>
-		<div class="movies-container">
-			<!-- Iterate over the list of movies -->
-			<div th:each="movie : ${movies}" class="movie">
-				<a th:href="@{'/rent/' + ${movie.movieId}}"> <img
-					th:src="${movie.imageUrl}" alt="Movie Poster">
+		<div class="movies-section"
+			th:if="${unrentedMovies != null and #lists.size(unrentedMovies) > 0}">
+			<h2>Trending Movies</h2>
+			<div class="movies-list">
+				<div th:each="movie : ${unrentedMovies}" class="movie">
+					<a th:href="@{'/rent/' + ${movie.movieId}}"> <img
+						th:src="${movie.imageUrl}" alt="Movie Poster">
+						<div class="movie-details">
+							<h3 th:text="${movie.name}"></h3>
+							<p>
+								Casts: <span th:text="${movie.casts}"></span>
+							</p>
+							<p>
+								Genres: <span th:text="${movie.genres}"></span>
+							</p>
+						</div>
+					</a>
+				</div>
+			</div>
+		</div>
+
+		<div class="movies-section"
+			th:if="${rentedMovies != null and #lists.size(rentedMovies) > 0}">
+			<h2>You have rented</h2>
+			<div class="movies-list">
+				<div th:each="movie : ${rentedMovies}" class="movie">
+					<img th:src="${movie.imageUrl}" alt="Movie Poster">
 					<div class="movie-details">
-						<h2 th:text="${movie.name}"></h2>
+						<h3 th:text="${movie.name}"></h3>
 						<p>
 							Casts: <span th:text="${movie.casts}"></span>
 						</p>
@@ -40,7 +63,7 @@
 							Genres: <span th:text="${movie.genres}"></span>
 						</p>
 					</div>
-				</a>
+				</div>
 			</div>
 		</div>
 	</div>
