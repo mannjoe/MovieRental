@@ -22,6 +22,6 @@ public interface MovieRepository extends JpaRepository<Movie, Long> {
 	 * @param releasedYear The released year of the movie
 	 * @return The movie object if found, otherwise null
 	 */
-	Movie findByNameAndReleasedYear(String name, int releasedYear);
+	Movie findByNameAndReleaseYear(String name, int releaseYear);
 
 }

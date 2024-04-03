@@ -10,13 +10,6 @@ import org.springframework.stereotype.Service;
 import com.fdmgroup.movierentalsystem.model.User;
 import com.fdmgroup.movierentalsystem.repository.UserRepository;
 
-/**
- * Service class for managing user-related operations.
- * 
- * @author Wong Mann Joe
- * @version 1.0
- * @date 2024-04-01
- */
 @Service
 public class UserService {
 
@@ -35,23 +28,19 @@ public class UserService {
 	 * 
 	 * @param identifier The user's mobile number or email address
 	 * @param password   The user's password
-	 * @return The first name of the authenticated user, or an empty string if
+	 * @return The user if authentication is successful, or an empty Optional if
 	 *         authentication fails
 	 */
-	public String authenticate(String identifier, String password) {
-		logger.debug("Authenticating user with identifier: {}", identifier);
+	public Optional<User> authenticate(String identifier, String password) {
 		Optional<User> userByMobile = userRepository.findByMobileNumber(identifier);
 		Optional<User> userByEmail = userRepository.findByEmailAddress(identifier);
-		Optional<User> userOptional = userByMobile.isPresent() ? userByMobile : userByEmail;
-		if (userOptional.isPresent()) {
-			User user = userOptional.get();
-			if (password.equals(user.getPassword())) {
-				logger.info("User authentication successful for user: {}", user.getFirstName());
-				return user.getFirstName();
-			}
+		Optional<User> user = userByMobile.isPresent() ? userByMobile : userByEmail;
+		if (user.isPresent() && password.equals(user.get().getPassword())) {
+			logger.info("User authentication successful for user: {}", user.get().getFirstName());
+		} else {
+			logger.warn("User authentication failed for identifier: {}", identifier);
 		}
-		logger.warn("User authentication failed for identifier: {}", identifier);
-		return "";
+		return user;
 	}
 
 	/**
@@ -62,7 +51,6 @@ public class UserService {
 	 *         same mobile number or email already exists
 	 */
 	public boolean registerNewUser(User user) {
-		logger.debug("Registering new user: {}", user);
 		Optional<User> userSameMobile = userRepository.findByMobileNumber(user.getMobileNumber());
 		Optional<User> userSameEmail = userRepository.findByEmailAddress(user.getEmailAddress());
 		if (userSameMobile.isPresent() || userSameEmail.isPresent()) {
@@ -72,5 +60,16 @@ public class UserService {
 		userRepository.save(user);
 		logger.info("New user registered successfully: {}", user.getFirstName());
 		return true;
+	}
+
+	/**
+	 * Finds a user by userId.
+	 * 
+	 * @param userId The ID of the user to find
+	 * @return An Optional containing the user if found, or an empty Optional if not
+	 *         found
+	 */
+	public Optional<User> findUserById(long userId) {
+		return userRepository.findById(userId);
 	}
 }

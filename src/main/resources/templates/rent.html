@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Movie Rental System</title>
+<link rel="stylesheet" th:href="@{/css/rent.css}">
+<script th:src="@{/js/rent.js}"></script>
+</head>
+
+<body>
+	<header>
+		<div class="header-content">
+			<div class="greeting-container">
+				<span>Hello, <span th:text="${session.name}"></span></span>
+			</div>
+			<div class="logo-container">
+				<img th:src="@{/img/fdm_logo.png}" alt="FDM logo">
+			</div>
+			<div class="logout-container">
+				<a href="/logout">Logout</a>
+			</div>
+		</div>
+	</header>
+
+	<div class="container" th:object="${movie}">
+		<div class="movie-details">
+			<div class="left-section">
+				<div class="movie-info">
+					<h2 class="movie-title" th:text="${movie.name}"></h2>
+					<img class="movie-poster" th:src="${movie.imageUrl}"
+						alt="Movie Poster">
+				</div>
+			</div>
+			<div class="right-section">
+				<p class="release-year">
+					Release Year: <span th:text="${movie.releaseYear}"></span>
+				</p>
+				<p class="description">
+					Description: <span th:text="${movie.description}"></span>
+				</p>
+				<p class="cast">
+					Casts: <span th:text="${movie.casts}"></span>
+				</p>
+				<p class="genres">
+					Genres: <span th:text="${movie.genres}"></span>
+				</p>
+				<p class="duration">
+					Duration: <span th:text="${movie.duration}"></span> min
+				</p>
+				<div class="rent-options">
+					<label for="rental-days">Select Rental Duration:</label> <select
+						name="rental-days" id="rental-days" onchange="calculateTotal()">
+						<option value="1" selected>1 Day</option>
+						<option value="2">2 Days</option>
+						<option value="3">3 Days</option>
+						<option value="4">4 Days</option>
+						<option value="5">5 Days</option>
+						<option value="6">6 Days</option>
+						<option value="7">7 Days</option>
+					</select>
+					<button class="rent-button" onclick="confirmTransaction()">Rent
+						Now</button>
+				</div>
+				<form id="rentForm" action="/rent-confirm" method="post">
+					<input type="hidden" id="movieId" name="movieId"
+						th:value="${movie.movieId}"> <input type="hidden"
+						id="rentalDays" name="rentalDays" value=""> <input
+						type="hidden" id="totalPrice" name="totalPrice" value="">
+				</form>
+
+				<p id="total-price-container" class="total-price">
+					Total Price: $<span id="total-price" th:text="${rentalPricePerDay}">0.00</span>
+				</p>
+			</div>
+		</div>
+	</div>
+
+	<footer>
+		<div class="footer-content">© 2024 Movie Rental System. All
+			Rights Reserved.</div>
+	</footer>
+
+</body>
+
+</html>

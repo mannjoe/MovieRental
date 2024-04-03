@@ -1,5 +1,7 @@
 package com.fdmgroup.movierentalsystem.controller;
 
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -7,6 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.fdmgroup.movierentalsystem.model.User;
 import com.fdmgroup.movierentalsystem.service.UserService;
 
 import jakarta.servlet.http.HttpServletRequest;
@@ -54,10 +57,11 @@ public class LoginController {
 	@PostMapping("/login")
 	public String processLogin(@RequestParam String identifier, @RequestParam String password, Model model,
 			HttpSession session, HttpServletRequest request) {
-		String name = userService.authenticate(identifier, password);
-		if (!name.isBlank()) {
+		Optional<User> user = userService.authenticate(identifier, password);
+		if (user.isPresent()) {
 			session = request.getSession(true);
-			session.setAttribute("name", name);
+			session.setAttribute("name", user.get().getFirstName());
+			session.setAttribute("userId", user.get().getUserId());
 			session.setMaxInactiveInterval(900);
 			return "redirect:/home";
 		} else {

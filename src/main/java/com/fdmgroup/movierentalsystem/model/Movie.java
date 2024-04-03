@@ -22,7 +22,7 @@ public class Movie {
 	private String description;
 	private String genres;
 	private int duration;
-	private int releasedYear;
+	private int releaseYear;
 	private String imageUrl;
 	private String videoUrl;
 
@@ -41,11 +41,11 @@ public class Movie {
 	 * @param description  Description of the movie
 	 * @param genres       Genres of the movie
 	 * @param duration     Duration of the movie (in minutes)
-	 * @param releasedYear Year the movie was released
+	 * @param releaseYear Year the movie was release
 	 * @param imageUrl     URL of the movie's image
 	 * @param videoUrl     URL of the movie's video
 	 */
-	public Movie(String name, String casts, String description, String genres, int duration, int releasedYear,
+	public Movie(String name, String casts, String description, String genres, int duration, int releaseYear,
 			String imageUrl, String videoUrl) {
 		super();
 		setName(name);
@@ -53,9 +53,23 @@ public class Movie {
 		setDescription(description);
 		setGenres(genres);
 		setDuration(duration);
-		setReleasedYear(releasedYear);
+		setReleaseYear(releaseYear);
 		setImageUrl(imageUrl);
 		setVideoUrl(videoUrl);
+	}
+	
+	public Movie(long movieId, String name, String casts, String description, String genres, int duration, int releaseYear,
+			String imageUrl, String videoUrl) {
+		this(name, casts, description, genres, duration, releaseYear, imageUrl, videoUrl);
+		setMovieId(movieId);
+	}
+
+	public long getMovieId() {
+		return movieId;
+	}
+
+	public void setMovieId(long movieId) {
+		this.movieId = movieId;
 	}
 
 	public String getName() {
@@ -98,12 +112,12 @@ public class Movie {
 		this.duration = duration;
 	}
 
-	public int getReleasedYear() {
-		return releasedYear;
+	public int getReleaseYear() {
+		return releaseYear;
 	}
 
-	public void setReleasedYear(int releasedYear) {
-		this.releasedYear = releasedYear;
+	public void setReleaseYear(int releaseYear) {
+		this.releaseYear = releaseYear;
 	}
 
 	public String getImageUrl() {

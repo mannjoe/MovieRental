@@ -57,6 +57,20 @@ public class User {
 		setMobileNumber(mobileNumber);
 		setEmailAddress(emailAddress);
 	}
+	
+	public User(long userId, String firstName, String lastName, LocalDate dob, String password, String mobileNumber,
+			String emailAddress) {
+		this(firstName, lastName, dob, password, mobileNumber, emailAddress);
+		setUserId(userId);
+	}	
+
+	public long getUserId() {
+		return userId;
+	}
+
+	public void setUserId(long userId) {
+		this.userId = userId;
+	}
 
 	public String getFirstName() {
 		return firstName;

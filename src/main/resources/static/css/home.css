@@ -43,10 +43,6 @@ header {
 	text-align: center;
 }
 
-.greeting-container span {
-	margin-right: px; /* Check this value */
-}
-
 .logout-container a {
 	color: var(--light-color);
 	text-decoration: none;
@@ -75,6 +71,15 @@ h1 {
 	background-color: var(--dark-color);
 	padding: 10px;
 	border-radius: 5px;
+	/* Remove default link styles */
+	text-decoration: none;
+	color: inherit;
+}
+
+.movie a {
+	/* Ensure anchor tags within movie class do not affect visual appearance */
+	text-decoration: none;
+	color: inherit;
 }
 
 .movie img {

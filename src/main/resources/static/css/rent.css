@@ -1,0 +1,134 @@
+/* CSS for Movie Rental System */
+body {
+	font-family: Arial, sans-serif;
+	background-color: #1f1f1f;
+	color: #fff;
+	margin: 0;
+	padding: 0;
+}
+
+header {
+	background-color: #111;
+	color: white;
+	padding: 20px 0;
+}
+
+.header-content {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	width: 100%;
+	margin: 0 auto;
+}
+
+.logo-container {
+	flex: 1;
+	text-align: center;
+}
+
+.logo-container img {
+	height: 50px;
+}
+
+.greeting-container, .logout-container {
+	flex: 1;
+	text-align: center;
+}
+
+.logout-container a {
+	color: var(--light-color);
+	text-decoration: none;
+}
+
+.container {
+	width: 80%;
+	margin: 20px auto;
+	display: flex;
+	justify-content: center; /* Center horizontally */
+	align-items: center; /* Center vertically */
+	flex-direction: column; /* Align items in a column */
+}
+
+.movie-details {
+	display: flex;
+	margin-top: 20px;
+	justify-content: space-between; /* Add space between elements */
+}
+
+.left-section, .right-section {
+	flex: 1;
+}
+
+.right-section {
+	padding-left: 20px;
+	display: flex;
+	flex-direction: column;
+	justify-content: center; /* Vertically center content */
+}
+
+.movie-info {
+	display: flex;
+	flex-direction: column;
+	align-items: center; /* Center items horizontally */
+	text-align: center; /* Center text */
+}
+
+.movie-title {
+	margin-top: 20px; /* Add spacing between image and title */
+}
+
+.movie-poster {
+	max-width: 50%;
+	max-height: 100vh;
+	width: auto;
+	height: auto;
+}
+
+.cast, .genres, .duration, .description, .release-year {
+	font-family: Arial, sans-serif; /* Same font */
+	font-size: 18px; /* Same font size */
+	color: #ccc;
+	margin-bottom: 20px; /* Increase gap between elements */
+}
+
+#rental-days {
+	font-family: Arial, sans-serif; /* Same font */
+	font-size: 18px; /* Same font size */
+	color: black; /* Black text color */
+}
+
+.rent-options label {
+	margin-right: 10px;
+	font-family: Arial, sans-serif; /* Same font */
+	font-size: 18px; /* Same font size */
+	color: #ccc;
+}
+
+.rent-button {
+	padding: 10px 15px;
+	font-size: 18px; /* Increase font size */
+	background-color: #FFD700;
+	color: #000;
+	border: none;
+	border-radius: 8px; /* Adjust border-radius for rounded corners */
+	cursor: pointer;
+	margin-left: 3%;
+}
+
+#total-price-container {
+	color: #00FF7F; /* Green text color */
+	font-family: Arial, sans-serif; /* Same font */
+	font-size: 18px; /* Same font size */
+	margin-top: 20px;
+}
+
+footer {
+	text-align: center;
+	padding: 10px 0;
+	background-color: #1f1f1f;
+	color: #ddd;
+}
+
+.footer-content {
+	font-size: 14px;
+}

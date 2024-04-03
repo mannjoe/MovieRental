@@ -1,6 +1,7 @@
 package com.fdmgroup.movierentalsystem.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -38,6 +39,10 @@ public class MovieService {
 		logger.debug("Retrieving all movies");
 		return movieRepository.findAll();
 	}
+	
+	public Optional<Movie> findMovieById(long movieId) {
+        return movieRepository.findById(movieId);
+    }
 
 	/**
 	 * Finds a movie by its name and released year.
@@ -48,7 +53,7 @@ public class MovieService {
 	 */
 	public Movie findMovieByNameAndReleasedYear(String name, int releasedYear) {
 		logger.debug("Finding movie by name '{}' and released year '{}'", name, releasedYear);
-		return movieRepository.findByNameAndReleasedYear(name, releasedYear);
+		return movieRepository.findByNameAndReleaseYear(name, releasedYear);
 	}
 
 	/**

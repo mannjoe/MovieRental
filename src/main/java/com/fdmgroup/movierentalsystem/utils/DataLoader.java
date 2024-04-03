@@ -50,7 +50,7 @@ public class DataLoader {
 
 			for (Movie movie : movies) {
 				Movie existingMovie = movieService.findMovieByNameAndReleasedYear(movie.getName(),
-						movie.getReleasedYear());
+						movie.getReleaseYear());
 				if (existingMovie != null) {
 					existingMovie.setGenres(movie.getGenres());
 					existingMovie.setDescription(movie.getDescription());

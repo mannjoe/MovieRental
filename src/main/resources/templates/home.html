@@ -29,14 +29,18 @@
 		<div class="movies-container">
 			<!-- Iterate over the list of movies -->
 			<div th:each="movie : ${movies}" class="movie">
-				<img th:src="${movie.imageUrl}" alt="Movie Poster">
-				<h2 th:text="${movie.name}"></h2>
-				<p>
-					Casts: <span th:text="${movie.casts}"></span>
-				</p>
-				<p>
-					Genres: <span th:text="${movie.genres}"></span>
-				</p>
+				<a th:href="@{'/rent/' + ${movie.movieId}}"> <img
+					th:src="${movie.imageUrl}" alt="Movie Poster">
+					<div class="movie-details">
+						<h2 th:text="${movie.name}"></h2>
+						<p>
+							Casts: <span th:text="${movie.casts}"></span>
+						</p>
+						<p>
+							Genres: <span th:text="${movie.genres}"></span>
+						</p>
+					</div>
+				</a>
 			</div>
 		</div>
 	</div>
